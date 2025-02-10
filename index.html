@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             color: #fff;
+            overflow: hidden;
         }
         h1 {
             color: #ff4081;
@@ -60,28 +61,21 @@
             text-shadow: 1px 1px #ff6699;
         }
 
-        /* Heart Pop-up Animation */
-        .popup-heart {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 100px;
+        /* Heart Fireworks Animation */
+        .floating-heart {
+            position: absolute;
+            font-size: 30px;
             color: #ff69b4;
-            animation: pop 1.2s ease-out forwards;
             opacity: 0;
+            animation: floatUp 3s ease-out forwards;
         }
-        @keyframes pop {
+        @keyframes floatUp {
             0% {
-                transform: translate(-50%, -50%) scale(0.1);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.5);
+                transform: translateY(0) scale(1);
                 opacity: 1;
             }
             100% {
-                transform: translate(-50%, -50%) scale(1);
+                transform: translateY(-200px) scale(1.5);
                 opacity: 0;
             }
         }
@@ -92,21 +86,38 @@
     <h1>Will you be my Valentine?</h1>
     <div class="heart">❤️</div>
     <p class="message">Lovie Rey Reyes</p>
-    <button class="button" onclick="showHeart()">YES</button>
+    <button class="button" onclick="popHearts()">YES</button>
+    <button class="button" onclick="alert('Yes! Rey Reyes! 💖')">I DO</button>
     
     <div class="footer">
         <p>Made with ❤️ by Lovie Aron</p>
     </div>
 
-    <!-- Popup Heart Element -->
-    <div id="popupHeart" class="popup-heart">❤️</div>
-
     <script>
-        function showHeart() {
-            const popupHeart = document.getElementById("popupHeart");
-            popupHeart.style.animation = 'none'; // Reset animation
-            popupHeart.offsetHeight; // Trigger reflow to restart animation
-            popupHeart.style.animation = ''; // Restart animation
+        function randomPosition(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.textContent = '❤️';
+            document.body.appendChild(heart);
+
+            // Random position
+            heart.style.left = `${randomPosition(window.innerWidth)}px`;
+            heart.style.top = `${randomPosition(window.innerHeight)}px`;
+
+            // Remove the heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        function popHearts() {
+            for (let i = 0; i < 30; i++) { // Generate multiple hearts
+                setTimeout(createHeart, i * 100); // Stagger creation for a fireworks effect
+            }
         }
     </script>
 
