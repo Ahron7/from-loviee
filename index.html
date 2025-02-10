@@ -59,6 +59,32 @@
             color: #fff;
             text-shadow: 1px 1px #ff6699;
         }
+
+        /* Heart Pop-up Animation */
+        .popup-heart {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            color: #ff69b4;
+            animation: pop 1.2s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes pop {
+            0% {
+                transform: translate(-50%, -50%) scale(0.1);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -66,13 +92,24 @@
     <h1>Will you be my Valentine?</h1>
     <div class="heart">❤️</div>
     <p class="message">Lovie Rey Reyes</p>
-    <button class="button" onclick="alert('Yes! Rey Reyes! 💖')">YES</button>
-    <class="small button" onclick="alert('Yes! Rey Reyes! 💖')">or</p>
+    <button class="button" onclick="showHeart()">YES</button>
     <button class="button" onclick="alert('Yes! Rey Reyes! 💖')">I DO</button>
     
     <div class="footer">
         <p>Made with ❤️ by Lovie Aron</p>
     </div>
+
+    <!-- Popup Heart Element -->
+    <div id="popupHeart" class="popup-heart">❤️</div>
+
+    <script>
+        function showHeart() {
+            const popupHeart = document.getElementById("popupHeart");
+            popupHeart.style.animation = 'none'; // Reset animation
+            popupHeart.offsetHeight; // Trigger reflow to restart animation
+            popupHeart.style.animation = ''; // Restart animation
+        }
+    </script>
 
 </body>
 </html>
